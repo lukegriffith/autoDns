@@ -75,6 +75,8 @@ func checkAndApply() {
 
 		Vars: map[string]interface{}{
 			"public_ip_address": ip.IP,
+			"zone_name":         os.Getenv("zone_name"),
+			"a_record":          os.Getenv("a_record"),
 		},
 
 		NoColor: true,
