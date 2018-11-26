@@ -6,11 +6,30 @@ import (
 	"net/http"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
 func main() {
+
+	log.Println("Started autoDns unit.")
+
+	for true {
+
+		checkAndApply()
+
+		log.Println("Completed check, entering wait.")
+
+		time.Sleep(120 * time.Second)
+
+		log.Println("Sleep finished.")
+
+	}
+
+}
+
+func checkAndApply() {
 
 	url := "https://api.ipify.org?format=json"
 
