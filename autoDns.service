@@ -1,0 +1,19 @@
+[Unit]
+Description=autoDns
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Restart=on-failure
+ExecStart=/usr/local/bin/AutoDns
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGINT
+User=autodns
+Group=autodns
+# Program Env Vars
+Environment=tfDir=/home/autodns/autoDns
+Environment=zone_name=lukegriffith.co.uk
+Environment=a_record=dewlling
+
+[Install]
+WantedBy=multi-user.target
