@@ -68,10 +68,10 @@ func checkAndApply() {
 		log.Println(err)
 	}
 
-  if ip.IP == "" || resp.StatusCode != 200 {
-    log.Fatal("ipify returned an invalid IP address or response")
-    return
-  }
+	if ip.IP == "" || resp.StatusCode != 200 {
+		log.Fatal("ipify returned an invalid IP address or response")
+		return
+	}
 
 	terraformOptions := &terraform.Options{
 		// The path to where your Terraform code is located
