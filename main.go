@@ -68,8 +68,8 @@ func checkAndApply() {
 		log.Println(err)
 	}
 
-  if ip.IP == "" {
-    log.Fatal("ipify returned an invalid IP address.")
+  if ip.IP == "" || resp.StatusCode != 200 {
+    log.Fatal("ipify returned an invalid IP address or response")
     return
   }
 
