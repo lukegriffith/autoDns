@@ -1,6 +1,6 @@
 # autoDns
 
-Uses terraform & terratest to create a program that will update the a public DNS name
+Uses terraform & terratest to create a program that will update a configured route53 DNS name
 
 ## building for pi
 
