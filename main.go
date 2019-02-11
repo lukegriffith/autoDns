@@ -63,11 +63,15 @@ func checkAndApply() {
 
 	// Fill the record with the data from the JSON
 	ip := &ipaddress{}
-
 	// Use json.Decode for reading streams of JSON data
 	if err := json.NewDecoder(resp.Body).Decode(&ip); err != nil {
 		log.Println(err)
 	}
+
+  if ip.IP == "" {
+    log.Fatal("ipify returned an invalid IP address.")
+    return
+  }
 
 	terraformOptions := &terraform.Options{
 		// The path to where your Terraform code is located
