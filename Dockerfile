@@ -1,16 +1,15 @@
-from resin/rpi-raspbian
+from golang:alpine
 
-COPY ./autoDns /usr/local/bin/autoDns
-COPY ./terraform /usr/local/bin/terraform
-COPY ./*.tf ~/
+RUN mkdir -p /app/workspace
+ADD autoDns /app/
+ADD *.tf /app/workspace/
 
 RUN mkdir /opt/autoDnsState
 
-
-ENV tfDir ~
+ENV tfDir /app/workspace
 
 ENV zone_name lukegriffith.co.uk
 
-ENV a_record dwelling
+ENV a_record home
 
-CMD autoDns
+CMD ["/app/autoDns"]

@@ -7,19 +7,23 @@ import (
 	"os"
 	"testing"
 	"time"
-
+  "errors"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
 func main() {
 
-	log.Println("Started autoDns unit.")
+	log.Println("Started autoDns.")
 
 	for true {
 
-		checkAndApply()
+    err := checkAndApply()
+    if err != nil {
+      log.Fatal(err)
+    }
 
-		log.Println("Completed check, entering wait.")
+
+		log.Println("Entering wait.")
 
 		time.Sleep(120 * time.Second)
 
@@ -29,15 +33,14 @@ func main() {
 
 }
 
-func checkAndApply() {
+func checkAndApply() err error {
 
 	url := "https://api.ipify.org?format=json"
 
 	// Build the request
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		log.Fatal("NewRequest: ", err)
-		return
+    return errors.New("ipify: Unable to create new http request.")
 	}
 
 	// create a Client
@@ -52,8 +55,7 @@ func checkAndApply() {
 	// returns an HTTP response
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatal("Do: ", err)
-		return
+		return errors.New("Error sending HTTP request.")
 	}
 
 	// Callers should close resp.Body
@@ -65,12 +67,11 @@ func checkAndApply() {
 	ip := &ipaddress{}
 	// Use json.Decode for reading streams of JSON data
 	if err := json.NewDecoder(resp.Body).Decode(&ip); err != nil {
-		log.Println(err)
+		return errors.New("Error decoding response.")
 	}
 
 	if ip.IP == "" || resp.StatusCode != 200 {
-		log.Fatal("ipify returned an invalid IP address or response")
-		return
+		return errors.New("ipify returned an invalid IP address or response")
 	}
 
 	terraformOptions := &terraform.Options{
@@ -89,6 +90,8 @@ func checkAndApply() {
 	t := &testing.T{}
 
 	terraform.InitAndApply(t, terraformOptions)
+
+  return nil
 
 }
 
