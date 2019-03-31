@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autodns-deployment
+  labels:
+    app: autodns
+spec:
+  selector:
+    matchLabels:
+      app: autodns
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: autodns
+    spec:
+      containers:
+      - image: lukegriffith/autodns
+        name: autodns
+        env:
+        - name: zone_name
+          value: lukegriffith.co.uk
+        - name: a_record
+          value: home
+ 
