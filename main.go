@@ -33,7 +33,7 @@ func main() {
 
 }
 
-func checkAndApply() err error {
+func checkAndApply() (err error) {
 
 	url := "https://api.ipify.org?format=json"
 

@@ -4,8 +4,9 @@ default: gobuild dockerbuild
 
 .PHONY: gobuild
 gobuild:
-	go build . -o autoDns
+	go get github.com/lukemgriffith/autodns
+	go build -o autodns . 
 
 .PHONY: dockerbuild
 dockerbuild:
-	docker build -t autoDns:latest .
+	docker build -t autodns:latest .
