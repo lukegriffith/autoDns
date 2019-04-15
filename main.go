@@ -2,13 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
+	"github.com/gruntwork-io/terratest/modules/terraform"
 	"log"
 	"net/http"
 	"os"
 	"testing"
 	"time"
-  "errors"
-	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
 func main() {
@@ -17,11 +17,10 @@ func main() {
 
 	for true {
 
-    err := checkAndApply()
-    if err != nil {
-      log.Fatal(err)
-    }
-
+		err := checkAndApply()
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		log.Println("Entering wait.")
 
@@ -40,7 +39,7 @@ func checkAndApply() (err error) {
 	// Build the request
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-    return errors.New("ipify: Unable to create new http request.")
+		return errors.New("ipify: Unable to create new http request.")
 	}
 
 	// create a Client
@@ -91,7 +90,7 @@ func checkAndApply() (err error) {
 
 	terraform.InitAndApply(t, terraformOptions)
 
-  return nil
+	return nil
 
 }
 
