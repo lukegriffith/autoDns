@@ -1,5 +1,7 @@
 terraform {
-  backend "local" {
-    path = "/opt/autoDnsState"
+  backend "s3" {
+    bucket = "lukeg-tfstate"
+    key    = "autodns.tfstate"
+    region = "eu-west-2"
   }
 }
