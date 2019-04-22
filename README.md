@@ -16,7 +16,7 @@ to have access a configured S3 bucket, and access to the route53 zone.
 Folder contains kubernetes manifests, autodns namespace, required AWS secrets 
 and the deployment object.
 
-### Makefile 
+## Makefile 
 
 View Makefile for common actions.
 
