@@ -17,11 +17,12 @@ func main() {
 
 	for true {
 
-		err := checkAndApply()
-		if err != nil {
-			log.Fatal(err)
-		}
-
+    log.Println("starting check")
+    err := checkAndApply()
+    log.Println("finished check")
+    if err != nil {
+      log.Fatal(err)
+    }
 		log.Println("Entering wait.")
 
 		time.Sleep(120 * time.Second)
@@ -88,10 +89,11 @@ func checkAndApply() (err error) {
 
 	t := &testing.T{}
 
-	terraform.InitAndApply(t, terraformOptions)
-
-	return nil
-
+  _, err = terraform.InitAndApplyE(t, terraformOptions)
+  if err != nil {
+    return errors.New("Terraform init/apply failed.")
+  }
+  return nil
 }
 
 type ipaddress struct {

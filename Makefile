@@ -2,14 +2,14 @@
 .PHONY: default
 default: build container
 
-.PHONY: gobuild
-gobuild:
-	go get github.com/lukemgriffith/autodns
+.PHONY: build
+build:
 	env CGO_ENABLED=0 go build -o autodns . 
 
 .PHONY: container
 container:
-	chmod a+x terraform
+	chmod +x terraform
+	chmod +x autodns
 	docker build -t lukegriffith/autodns:latest .
 	docker push lukegriffith/autodns:latest
 
@@ -23,14 +23,7 @@ deploy:
 		-e 'tfDir=/app/workspace' -d \
 		lukegriffith/autodns:latest
 
-.PHONY: clean
-clean:
-
-.PHONY: deps
-deps:
-	if [ ! -f ./terraform ]
-	then
-		curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip 
-		unzip /tmp/terraform.zip
-	fi
-
+.PHONY: setup
+setup:
+	curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip 
+	unzip /tmp/terraform.zip
