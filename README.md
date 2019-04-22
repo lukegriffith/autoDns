@@ -3,7 +3,7 @@
 Uses terraform & terratest to create a program that will update a configured 
 route53 DNS name. Used as an alternative to a DynDNS service. 
 
-## Repo Organization
+## Structure
 
 ### Stack
 
@@ -11,6 +11,10 @@ Folder contains teh terraform codebase that creates the route53 DNS record.
 Configured using a S3 backend, the AWS credentials passed to the container need
 to have access a configured S3 bucket, and access to the route53 zone. 
 
+### Templates
+
+Folder contains kubernetes manifests, autodns namespace, required AWS secrets 
+and the deployment object.
 
 ### Makefile 
 
@@ -28,7 +32,4 @@ Access Key + Secret Key to be passed in.
 
 ```setup``` downloads terraform binary and unpacks to cwd. 
 
-### Templates
 
-Folder contains kubernetes manifests, autodns namespace, required AWS secrets 
-and the deployment object. 
