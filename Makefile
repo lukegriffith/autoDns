@@ -4,7 +4,7 @@ default: build container
 
 .PHONY: build
 build:
-	env CGO_ENABLED=0 go build -o autodns . 
+	env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o autodns . 
 
 .PHONY: container
 container:
