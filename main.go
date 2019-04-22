@@ -15,17 +15,24 @@ func main() {
 
 	log.Println("Started autoDns.")
 
+	c := &config{
+		"https://api.ipify.org?format=json",
+		120,
+		os.Getenv("zone_name"),
+		os.Getenv("a_record"),
+	}
+
 	for true {
 
 		log.Println("starting check")
-		err := checkAndApply()
+		err := checkAndApply(c)
 		log.Println("finished check")
 		if err != nil {
 			log.Fatal(err)
 		}
 		log.Println("Entering wait.")
 
-		time.Sleep(120 * time.Second)
+		time.Sleep(c.refresh * time.Second)
 
 		log.Println("Sleep finished.")
 
@@ -33,10 +40,9 @@ func main() {
 
 }
 
-func checkAndApply() (err error) {
+func checkAndApply(c *config) (err error) {
 
-	url := "https://api.ipify.org?format=json"
-
+	url := c.ip_api
 	// Build the request
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -80,8 +86,8 @@ func checkAndApply() (err error) {
 
 		Vars: map[string]interface{}{
 			"public_ip_address": ip.IP,
-			"zone_name":         os.Getenv("zone_name"),
-			"a_record":          os.Getenv("a_record"),
+			"zone_name":         c.zone_name,
+			"a_record":          c.a_record,
 		},
 
 		NoColor: true,
@@ -98,4 +104,11 @@ func checkAndApply() (err error) {
 
 type ipaddress struct {
 	IP string `json:"ip"`
+}
+
+type config struct {
+	ip_api	string
+	refresh time.Duration
+	zone_name string
+	a_record string
 }
