@@ -15,7 +15,11 @@ container:
 
 .PHONY: deploy
 deploy:
-	#kubectl apply -f manifest.json
+	kubectl apply -f templates/
+
+
+.PHONY: dockerrun
+dockerrun:
 	docker run -e 'AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)' \
 		-e 'AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)' \
 		-e 'zone_name=griffith.cloud' \
@@ -25,5 +29,6 @@ deploy:
 
 .PHONY: setup
 setup:
-	curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip 
+	curl -o /tmp/terraform.zip \
+	https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip 
 	unzip /tmp/terraform.zip
