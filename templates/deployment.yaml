@@ -22,7 +22,7 @@ spec:
         name: autodns
         env:
         - name: zone_name
-          value: lukegriffith.co.uk
+          value: griffith.cloud
         - name: a_record
           value: home
         - name: AWS_ACCESS_KEY_ID
